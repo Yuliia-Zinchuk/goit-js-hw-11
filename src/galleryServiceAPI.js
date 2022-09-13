@@ -15,11 +15,14 @@ export default class GalleryApiService {
 
     const url = `https://pixabay.com/api/?key=${API_KEY}&q=${this.searchQuery}&per_page=5&${this.page}`;
 
-    fetch(url)
+    return fetch(url)
       .then(r => r.json())
       .then(data => {
+        //console.log(data);
         this.incrementPage();
         console.log('после запроса', this);
+
+        return data.hits;
       });
   }
 

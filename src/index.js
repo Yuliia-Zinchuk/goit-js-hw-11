@@ -15,11 +15,11 @@ function onSearch(evt) {
 
   galleryApiService.searchQuery = evt.currentTarget.elements.searchQuery.value;
   galleryApiService.resetPage();
-  galleryApiService.fetchPictures();
+  galleryApiService.fetchPictures().then(hits => console.log(hits));
 }
 
 function onLoadMore() {
-  galleryApiService.fetchPictures();
+  galleryApiService.fetchPictures().then(hits => console.log(hits));
 }
 
 // const URL =
