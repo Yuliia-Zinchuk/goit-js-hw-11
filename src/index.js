@@ -14,6 +14,7 @@ function onSearch(evt) {
   evt.preventDefault();
 
   galleryApiService.searchQuery = evt.currentTarget.elements.searchQuery.value;
+  galleryApiService.resetPage();
   galleryApiService.fetchPictures();
 }
 

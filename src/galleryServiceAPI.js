@@ -1,10 +1,11 @@
 export default class GalleryApiService {
   constructor() {
     this.searchQuery = '';
+    this.page = 1;
   }
 
   fetchPictures() {
-    console.log(this);
+    //console.log('до запроса', this);
     // const options = {
     //     headers: {
     //         Authorization: '29884579-b0e414ddacb31e478cf055115',
@@ -12,11 +13,22 @@ export default class GalleryApiService {
     // };
     const API_KEY = '29884579-b0e414ddacb31e478cf055115';
 
-    const url = `https://pixabay.com/api/?key=${API_KEY}&q=${this.searchQuery}`;
+    const url = `https://pixabay.com/api/?key=${API_KEY}&q=${this.searchQuery}&per_page=5&${this.page}`;
 
     fetch(url)
       .then(r => r.json())
-      .then(console.log());
+      .then(data => {
+        this.incrementPage();
+        console.log('после запроса', this);
+      });
+  }
+
+  incrementPage() {
+    this.page += 1;
+  }
+
+  resetPage() {
+    this.page = 1;
   }
 
   get query() {
