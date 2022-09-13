@@ -15,11 +15,27 @@ function onSearch(evt) {
 
   galleryApiService.searchQuery = evt.currentTarget.elements.searchQuery.value;
   galleryApiService.resetPage();
-  galleryApiService.fetchPictures().then(hits => console.log(hits));
+  galleryApiService.fetchPictures().then(renderPicturesList);
 }
 
 function onLoadMore() {
-  galleryApiService.fetchPictures().then(hits => console.log(hits));
+  galleryApiService.fetchPictures().then(renderPicturesList);
+}
+
+function renderPicturesList(hits) {
+  console.log(hits);
+  const list = hits
+    .map(hit => {
+      return `<li>
+          <img class="picture" src="${hit.largeImageURL}" alt="flag" width="60">
+                  <h3>${hit.likes}</h3>
+
+                </li>
+            `;
+    })
+    .join('');
+
+  galleryContainer.insertAdjacentHTML('beforeend', list);
 }
 
 // const URL =
