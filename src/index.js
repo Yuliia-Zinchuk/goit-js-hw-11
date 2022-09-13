@@ -1,37 +1,25 @@
+import GalleryApiService from './galleryServiceAPI';
+
 const searchForm = document.querySelector('.search-form');
 const galleryContainer = document.querySelector('.gallery');
-const loadMoreButton = Document.querySelector('[data-action="load-more"]');
+const loadMoreButton = document.querySelector('[data-action="load-more"]');
+
+const galleryApiService = new GalleryApiService();
+console.log(galleryApiService);
 
 searchForm.addEventListener('submit', onSearch);
-searchForm.addEventListener('click', onLoadMore);
+loadMoreButton.addEventListener('click', onLoadMore);
 
 function onSearch(evt) {
   evt.preventDefault();
 
-  const API_KEY = '29884579-b0e414ddacb31e478cf055115';
-
-  const searchQuery = evt.currentTarget.elements.searchQuery.value;
-
-  const url = `https://pixabay.com/api/?key=${API_KEY}&q=${searchQuery}`;
-
-  fetch(url)
-    .then(r => r.json())
-    .then(console.log());
+  galleryApiService.searchQuery = evt.currentTarget.elements.searchQuery.value;
+  galleryApiService.fetchPictures();
 }
 
 function onLoadMore() {
-  const url = `https://pixabay.com/api/?key=${API_KEY}&q=${searchQuery}`;
-
-  fetch(url)
-    .then(r => r.json())
-    .then(console.log());
+  galleryApiService.fetchPictures();
 }
-
-// const options = {
-//     headers: {
-//         Authorization: '29884579-b0e414ddacb31e478cf055115',
-//     },
-// };
 
 // const URL =
 //   'https://pixabay.com/api/?key=' +
