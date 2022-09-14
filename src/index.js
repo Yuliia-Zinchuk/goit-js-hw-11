@@ -4,7 +4,7 @@ import Notiflix from 'notiflix';
 import { GalleryApiService } from './galleryServiceAPI';
 import { per_page } from './galleryServiceAPI';
 const searchForm = document.querySelector('.search-form');
-const searchBox = document.getElementsByName('searchQuery');
+
 const galleryContainer = document.querySelector('.gallery');
 const loadMoreButton = document.querySelector('.load-more');
 
@@ -20,7 +20,8 @@ loadMoreButton.addEventListener('click', onLoadMore);
 
 function onSearch(evt) {
   evt.preventDefault();
-  if (searchBox.value === '') {
+  const searchBoxValue = document.getElementsByName('searchQuery')[0].value;
+  if (searchBoxValue === '') {
     Notiflix.Notify.failure('Please, input your query.');
     return;
   }

@@ -29,11 +29,8 @@ export class GalleryApiService {
       );
     }
     const totalPages = tothits / per_page;
-    console.log(totalPages);
 
-    console.log(tothits);
     this.incrementPage();
-    console.log(Math.ceil(totalPages));
 
     if (this.page > Math.ceil(totalPages)) {
       invisibleButton();
