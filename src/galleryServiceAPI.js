@@ -5,6 +5,7 @@
 //     safesearch - фильтр по возрасту.Задай значение true.
 
 import Notiflix from 'notiflix';
+import axios from 'axios';
 const API_KEY = '29884579-b0e414ddacb31e478cf055115';
 const BASE_URL = 'https://pixabay.com/api';
 const fieldParams = 'image_type=photo&orientation=horizontal&safesearch=true';
@@ -14,6 +15,7 @@ const per_page = 40;
 import { invisibleButton } from './index';
 console.log(invisibleButton);
 let tothits = 0;
+const axios = require('axios');
 // const options = {
 //     headers: {
 //         Authorization: API_KEY ,
@@ -26,31 +28,26 @@ export default class GalleryApiService {
     // this.per_page = 5;
   }
 
-  //   fetchPictures() {
-  //     const url = `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&${fieldParams}&per_page=5&page=${this.page}`;
+  //   async fetchPictures() {
+  //     const url = `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&${fieldParams}&per_page=${per_page}&page=${this.page}`;
 
-  //     return fetch(url)
-  //       .then(response => response.json())
-  //       .then(({ hits }) => {
-  //         //console.log(data);
-  //         this.incrementPage();
-  //         // loadMoreButton.setAttribute('hidden', false);
-  //         // console.log('после запроса', this);
-  //         //loadMoreButton.setAttribute('hidden', true);
+  //     const response = await fetch(url);
 
-  //         return hits;
-  //       });
-  //   }
+  //     console.log(response);
+
+  //     const hits = await response.json();
+  //     console.log(hits);
 
   async fetchPictures() {
     const url = `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&${fieldParams}&per_page=${per_page}&page=${this.page}`;
 
-    const response = await fetch(url);
+    const response = await axios.get(url);
 
-    console.log(response);
-
-    const hits = await response.json();
+    // console.log(response);
+    const hits = response.data;
+    // response = await (response => ;
     console.log(hits);
+
     tothits = hits.totalHits;
     if (tothits === 0) {
       Notiflix.Notify.failure(
@@ -67,6 +64,7 @@ export default class GalleryApiService {
     console.log(Math.ceil(totalPages));
 
     if (this.page > Math.ceil(totalPages)) {
+      invisibleButton();
       Notiflix.Notify.info(
         'Sorry, there are no images matching your search query. Please try again.'
       );
