@@ -9,32 +9,39 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const searchForm = document.querySelector('.search-form');
 const galleryContainer = document.querySelector('.gallery');
-const loadMoreButton = document.querySelector('[data-action="load-more"]');
+export const loadMoreButton = document.querySelector('.load-more');
 
+//loadMoreButton.removeAttribute('hidden', true);
+loadMoreButton.setAttribute('hidden', true);
+
+//style="display: none;
 const galleryApiService = new GalleryApiService();
 console.log(galleryApiService);
 
 searchForm.addEventListener('submit', onSearch);
 loadMoreButton.addEventListener('click', onLoadMore);
 
+// btnStop.setAttribute('disabled', true);
+
 function onSearch(evt) {
   evt.preventDefault();
-
-  //  if (galleryApiService.searchQuery === '') {
-  //      return alert 'jjj';
-
-  //  }
-
+  loadMoreButton.setAttribute('hidden', true);
   galleryApiService.searchQuery = evt.currentTarget.elements.searchQuery.value;
 
   if (galleryApiService.searchQuery === '') {
     return Notiflix.Notify.failure('Oops, there is no country with that names');
   }
+
   galleryApiService.resetPage();
+
+  // loadMoreButton.setAttribute('hidden', true);
   galleryApiService.fetchPictures().then(hits => {
     clearGalleryContainer();
     renderPicturesList(hits);
+    loadMoreButton.removeAttribute('hidden');
   });
+
+  //loadMoreButton.removeAttribute('hidden');
 }
 
 function onLoadMore() {
@@ -67,7 +74,7 @@ function renderPicturesList(hits) {
 
   galleryContainer.insertAdjacentHTML('beforeend', list);
 
-  console.log(list);
+  //console.log(list);
 
   //   let gallery = list.simpleLightbox();
 
