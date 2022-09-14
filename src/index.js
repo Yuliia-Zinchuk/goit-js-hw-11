@@ -28,27 +28,47 @@ function onSearch(evt) {
   loadMoreButton.setAttribute('hidden', true);
   galleryApiService.searchQuery = evt.currentTarget.elements.searchQuery.value;
 
-  if (galleryApiService.searchQuery === '') {
-    return Notiflix.Notify.failure('Oops, there is no country with that names');
-  }
+  //   if (galleryApiService.searchQuery === '') {
+  //     return Notiflix.Notify.failure('Oops, there is no country with that names');
+  //   }
 
   galleryApiService.resetPage();
+  //galleryApiService.message1();
 
   // loadMoreButton.setAttribute('hidden', true);
   galleryApiService.fetchPictures().then(hits => {
     clearGalleryContainer();
     renderPicturesList(hits);
     loadMoreButton.removeAttribute('hidden');
+
+    // message(hits);
+
+    // console.log(hits);
+    // if (hits === []) {
+    //   console.log(900);
+    //   //   return Notiflix.Notify.failure(
+    //   //     'Oops, there is no country with that names'
+    //   //   );
+    // }
   });
 
+  // .catch(error =>
+  //   Notiflix.Notify.failure('Oops, there is no country with that names')
+  // );
+
+  //   if (hits === []) {
+  //     return Notiflix.Notify.failure('Oops, there is no country with that names');
+  //   }
   //loadMoreButton.removeAttribute('hidden');
 }
 
 function onLoadMore() {
   galleryApiService.fetchPictures().then(renderPicturesList);
+  // alert(`${tothits}`);
 }
+//console.log(galleryApiService.fetchPictures(tothits));
 function renderPicturesList(hits) {
-  // console.log(hits);
+  console.log(hits);
   const list = hits
     .map(hit => {
       return `<div class="photo-card">
@@ -74,7 +94,7 @@ function renderPicturesList(hits) {
 
   galleryContainer.insertAdjacentHTML('beforeend', list);
 
-  //console.log(list);
+  // console.log(list);
 
   //   let gallery = list.simpleLightbox();
 
@@ -87,7 +107,7 @@ function clearGalleryContainer() {
 
 // let gallery = `${'.photo-card div'}`.simpleLightbox();
 
-let gallery = new SimpleLightbox('.photo-card a');
+let gallery = new SimpleLightbox('.gallery a');
 
 gallery.refresh();
 // gallery.next(); // Next Image
@@ -96,70 +116,20 @@ gallery.refresh();
 //   captionDelay: 250,
 // });
 
-// function renderPicturesList(hits) {
-//   console.log(hits);
-//   const list = hits
-//     .map(hit => {
-//       return `<li>
-//           <img class="picture" src="${hit.largeImageURL}" alt="var with alt" >
-//                   <h3>${hit.likes}</h3>
+//  getNews(query) {
+//     if (query === undefined) query = this.config.data.q;
+//     else this.config.data.q = query;
 
-//                 </li>
-//             `;
-//     })
-//     .join('');
+//     let serchParams = new URLSearchParams(this.config.data);
+//     return fetch(`${this.config.baseURL}?${serchParams}`, this.config)
+//       .then((resp) => resp.json())
+//       .then((data) => {
+//         this.totalPage = data.total_pages;
+//         return data;
+//       });
+//   }
 
-//   galleryContainer.insertAdjacentHTML('beforeend', list);
+//   setPage(page) {
+//     this.config.data.page = page;
+//   }
 // }
-
-// const URL =
-//   'https://pixabay.com/api/?key=' +
-//   API_KEY +
-//   '&q=' +
-//   encodeURIComponent('red roses')$.getJSON(URL, function (data) {
-// //   if (parseInt(data.totalHits) > 0)
-//     $.each(data.hits, function (i, hit) {
-//       console.log(hit.pageURL);
-//     });
-//   else console.log('No hits');
-// });
-
-//fetch('https://pixabay.com/api/');
-
-// const fetchUsersBtn = document.querySelector('.text');
-// console.log(fetchUsersBtn);
-// //const userList = document.querySelector('.user-list');
-
-// fetchUsersBtn.addEventListener('submit', () => {
-//   fetchUsers()
-//     .then(users => renderUserList(users))
-
-//     .catch(error => console.log(error));
-
-//   console.log(98);
-// });
-
-// function fetchUsers() {
-//   return fetch('https://restcountries.com/v3.1/name').then(response => {
-//     if (!response.ok) {
-//       throw new Error(response.status);
-//     }
-//     return response.json();
-//   });
-// }
-// console.log(999);
-// function renderUserList(users) {
-//   const markup = users
-//     .map(user => {
-//       return `<li>
-//           <p><b>Name</b>: ${user.name}</p>
-//           <p><b>Email</b>: ${user.email}</p>
-//           <p><b>Company</b>: ${user.company.name}</p>
-//         </li>`;
-//     })
-//     .join('');
-//   userList.innerHTML = markup;
-// }
-
-//
-// };
