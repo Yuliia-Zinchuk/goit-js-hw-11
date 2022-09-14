@@ -1,4 +1,11 @@
+import SimpleLightbox from 'simplelightbox';
+import Notiflix from 'notiflix';
 import GalleryApiService from './galleryServiceAPI';
+
+// Описан в документации
+//import SimpleLightbox from 'simplelightbox';
+// Дополнительный импорт стилей
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const searchForm = document.querySelector('.search-form');
 const galleryContainer = document.querySelector('.gallery');
@@ -13,30 +20,90 @@ loadMoreButton.addEventListener('click', onLoadMore);
 function onSearch(evt) {
   evt.preventDefault();
 
+  //  if (galleryApiService.searchQuery === '') {
+  //      return alert 'jjj';
+
+  //  }
+
   galleryApiService.searchQuery = evt.currentTarget.elements.searchQuery.value;
+
+  if (galleryApiService.searchQuery === '') {
+    return Notiflix.Notify.failure('Oops, there is no country with that names');
+  }
   galleryApiService.resetPage();
-  galleryApiService.fetchPictures().then(renderPicturesList);
+  galleryApiService.fetchPictures().then(hits => {
+    clearGalleryContainer();
+    renderPicturesList(hits);
+  });
 }
 
 function onLoadMore() {
   galleryApiService.fetchPictures().then(renderPicturesList);
 }
-
 function renderPicturesList(hits) {
-  console.log(hits);
+  // console.log(hits);
   const list = hits
     .map(hit => {
-      return `<li>
-          <img class="picture" src="${hit.largeImageURL}" alt="flag" width="60">
-                  <h3>${hit.likes}</h3>
-
-                </li>
+      return `<div class="photo-card">
+  <img src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" width="340px"/>
+  <div class="info">
+    <p class="info-item">
+      <b>Likes: ${hit.likes}</b>
+    </p>
+    <p class="info-item">
+      <b>Views: ${hit.views}</b>
+    </p>
+    <p class="info-item">
+      <b>Comments: ${hit.comments}</b>
+    </p>
+    <p class="info-item">
+      <b>Downloads: ${hit.downloads}</b>
+    </p>
+  </div>
+</div>
             `;
     })
-    .join('');
+    .join(''); //
 
   galleryContainer.insertAdjacentHTML('beforeend', list);
+
+  console.log(list);
+
+  //   let gallery = list.simpleLightbox();
+
+  //   gallery.next(); // Next Image
 }
+
+function clearGalleryContainer() {
+  galleryContainer.innerHTML = '';
+}
+
+// let gallery = `${'.photo-card div'}`.simpleLightbox();
+
+let gallery = new SimpleLightbox('.photo-card a');
+
+gallery.refresh();
+// gallery.next(); // Next Image
+// new SimpleLightbox('.photo-card a', {
+//   captionsData: 'alt',
+//   captionDelay: 250,
+// });
+
+// function renderPicturesList(hits) {
+//   console.log(hits);
+//   const list = hits
+//     .map(hit => {
+//       return `<li>
+//           <img class="picture" src="${hit.largeImageURL}" alt="var with alt" >
+//                   <h3>${hit.likes}</h3>
+
+//                 </li>
+//             `;
+//     })
+//     .join('');
+
+//   galleryContainer.insertAdjacentHTML('beforeend', list);
+// }
 
 // const URL =
 //   'https://pixabay.com/api/?key=' +
