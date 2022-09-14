@@ -3,6 +3,7 @@
 // image_type - тип изображения. Мы хотим только фотографии, поэтому задай значение photo.
 // orientation - ориентация фотографии. Задай значение horizontal.
 //     safesearch - фильтр по возрасту.Задай значение true.
+
 import Notiflix from 'notiflix';
 const API_KEY = '29884579-b0e414ddacb31e478cf055115';
 const BASE_URL = 'https://pixabay.com/api';

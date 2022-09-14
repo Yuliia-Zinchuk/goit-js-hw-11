@@ -39,8 +39,9 @@ function onSearch(evt) {
   galleryApiService.fetchPictures().then(hits => {
     clearGalleryContainer();
     renderPicturesList(hits);
-    loadMoreButton.removeAttribute('hidden');
-
+    if (hits.length >= 5) {
+      loadMoreButton.removeAttribute('hidden');
+    }
     // message(hits);
 
     // console.log(hits);
