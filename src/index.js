@@ -34,7 +34,7 @@ function onSearch(evt) {
   galleryApiService.fetchPictures().then(hits => {
     clearGalleryContainer();
     renderPicturesList(hits);
-    console.log(hits.length);
+
     if (hits.length >= per_page) {
       loadMoreButton.removeAttribute('hidden');
     }
@@ -46,7 +46,6 @@ function onLoadMore() {
 }
 
 function renderPicturesList(hits) {
-  console.log(hits);
   const list = hits
     .map(hit => {
       return `<div class="photo-card">
