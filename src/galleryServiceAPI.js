@@ -30,16 +30,14 @@ export class GalleryApiService {
     }
     const totalPages = tothits / per_page;
 
-    this.incrementPage();
-
-    if (this.page > Math.ceil(totalPages)) {
+    if (this.page === Math.ceil(totalPages)) {
       invisibleButton();
       Notiflix.Notify.info(
         "We're sorry, but you've reached the end of search results."
       );
       // invisibleButton();
     }
-
+    this.incrementPage();
     return hits.hits;
   }
 
