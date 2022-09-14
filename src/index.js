@@ -9,11 +9,15 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const searchForm = document.querySelector('.search-form');
 const galleryContainer = document.querySelector('.gallery');
-export const loadMoreButton = document.querySelector('.load-more');
+const loadMoreButton = document.querySelector('.load-more');
+
+//loadMoreButton.setAttribute('hidden', true);
 
 //loadMoreButton.removeAttribute('hidden', true);
-loadMoreButton.setAttribute('hidden', true);
-
+export function invisibleButton() {
+  return loadMoreButton.setAttribute('hidden', true);
+}
+invisibleButton();
 //style="display: none;
 const galleryApiService = new GalleryApiService();
 console.log(galleryApiService);

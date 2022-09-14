@@ -8,7 +8,11 @@ import Notiflix from 'notiflix';
 const API_KEY = '29884579-b0e414ddacb31e478cf055115';
 const BASE_URL = 'https://pixabay.com/api';
 const fieldParams = 'image_type=photo&orientation=horizontal&safesearch=true';
-import loadMoreButton from './index';
+const per_page = 40;
+//import loadMoreButton from './index';
+//console.log(loadMoreButton);
+import { invisibleButton } from './index';
+console.log(invisibleButton);
 let tothits = 0;
 // const options = {
 //     headers: {
@@ -19,6 +23,7 @@ export default class GalleryApiService {
   constructor() {
     this.searchQuery = '';
     this.page = 1;
+    // this.per_page = 5;
   }
 
   //   fetchPictures() {
@@ -38,7 +43,7 @@ export default class GalleryApiService {
   //   }
 
   async fetchPictures() {
-    const url = `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&${fieldParams}&per_page=5&page=${this.page}`;
+    const url = `${BASE_URL}/?key=${API_KEY}&q=${this.searchQuery}&${fieldParams}&per_page=${per_page}&page=${this.page}`;
 
     const response = await fetch(url);
 
@@ -51,10 +56,22 @@ export default class GalleryApiService {
       Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
+
       //alert('rrr');
     }
+    const totalPages = tothits / per_page;
+    console.log(totalPages);
+
     console.log(tothits);
     this.incrementPage();
+    console.log(Math.ceil(totalPages));
+
+    if (this.page > Math.ceil(totalPages)) {
+      Notiflix.Notify.info(
+        'Sorry, there are no images matching your search query. Please try again.'
+      );
+      invisibleButton();
+    }
     // console.log('gjckt pfghjcf', tothits);
 
     return hits.hits;
